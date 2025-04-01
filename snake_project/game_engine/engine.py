@@ -36,3 +36,8 @@ def move_snake_wrap(snake, direction, board_size):
 
 def calculate_speed(current_speed):
     return current_speed * 1.07
+
+def is_within_bounds(position, board_size):
+    x, y = position
+    width, height = board_size
+    return 0 <= x < width and 0 <= y < height
