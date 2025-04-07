@@ -1,9 +1,20 @@
+"""
+game_engine/engine.py
+
+Silnik gry Snake - logika niezależna od interfejsu graficznego.
+Używany do przetwarzania ruchu, kolizji, punktów i parametrów gry.
+
+Układ współrzędnych: kartezjański (0, 0) w lewym dolnym rogu.
+Oś X rośnie w prawo, oś Y rośnie w górę.
+"""
+
+# Przesuwa węża w zadanym kierunku, układ kartezjański (bez przenikania przez ściany).
 def move_snake(snake, direction):
     head_x, head_y = snake[0]
     if direction == "up":
-        new_head = (head_x, head_y - 1)
-    elif direction == "down":
         new_head = (head_x, head_y + 1)
+    elif direction == "down":
+        new_head = (head_x, head_y - 1)
     elif direction == "left":
         new_head = (head_x - 1, head_y)
     elif direction == "right":
@@ -13,19 +24,22 @@ def move_snake(snake, direction):
     
     return [new_head] + snake[:-1]
 
+# sprawdzenie czy głowa koliduje z ciałem
 def check_collision(snake):
     head = snake[0]
     return head in snake[1:]
 
+# Oblicza wynik gracza na podstawie długości węża.
 def calculate_score(length):
-    return length - 1  # zakładamy startowy długość = 1
+    return length - 1  # zakładamy startowa długość = 1
 
+# Przesuwa węża z uwzględnieniem przenikania przez /ścianykrawędzie planszy (teleportacja)
 def move_snake_wrap(snake, direction, board_size):
     head_x, head_y = snake[0]
     if direction == "up":
-        new_head = (head_x, (head_y - 1) % board_size[1])
-    elif direction == "down":
         new_head = (head_x, (head_y + 1) % board_size[1])
+    elif direction == "down":
+        new_head = (head_x, (head_y - 1) % board_size[1])
     elif direction == "left":
         new_head = ((head_x - 1) % board_size[0], head_y)
     elif direction == "right":
@@ -34,10 +48,33 @@ def move_snake_wrap(snake, direction, board_size):
         raise ValueError("Invalid direction")
     return [new_head] + snake[:-1]
 
-def calculate_speed(current_speed):
+# Zwiększa prędkość węża o 7% po zjedzeniu owocu.
+def increase_speed(current_speed):
     return current_speed * 1.07
 
+# Sprawdza, czy dana pozycja znajduje się w granicach planszy.
 def is_within_bounds(position, board_size):
     x, y = position
     width, height = board_size
     return 0 <= x < width and 0 <= y < height
+
+#BONUS - zbieranie punktow za owoce na planszy
+def collect_fruit(snake_head, fruits, score):
+    if snake_head in fruits:
+        score += fruits[snake_head]
+        del fruits[snake_head]
+    return score, fruits
+
+#PRZYSPIESZENIE - po kliknieciu (tryb przyśpieszenia)
+def handle_speed_boost(speed, boost_pressed):
+    if boost_pressed:
+        return max(speed * 0.8, 0.2)  # nie szybciej niż 0.2
+    return speed
+
+#PUNKTY ZYCIA - zmniejszanie żyć
+def update_lives(lives, collided):
+    if collided:
+        lives -= 1
+        if lives <= 0:
+            return 0, True
+    return lives, False
