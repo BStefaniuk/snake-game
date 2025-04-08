@@ -9,7 +9,7 @@ Oś X rośnie w prawo, oś Y rośnie w górę.
 """
 import random
 
-def init_game_state(board_size = (10,10), start_position = (5,5), lives = 3):
+def init_game_status(board_size = (10,10), start_position = (5,5), lives = 3):
     fruit_x = random.randint(0, board_size[0] - 1)
     fruit_y = random.randint(0, board_size[1] - 1)
     status = {} #pusty słownik do którego dodajemy:

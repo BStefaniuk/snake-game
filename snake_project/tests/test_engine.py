@@ -3,6 +3,20 @@
 
 from game_engine.engine import move_snake, check_collision, calculate_score
 from game_engine.engine import is_within_bounds
+from game_engine.engine import init_game_status
+
+def test_init_game_status_structure():
+    #nowy stan gry z plansza plansza 8x8
+    status = init_game_status(8,8)
+
+    #sprawdzanie czy zwrócony słownik zawiera wymagane klucze i czy typy danych sa poprawne
+    assert "snake_position" in status
+    assert "fruits" in status
+    assert "score" in status
+    assert "game_over" in status
+    assert isinstance(status["snake_position"], list)
+    assert isinstance(status["fruits"], dict)
+
 
 def test_move_snake_up():
     snake = [(5, 5), (5, 4)]
