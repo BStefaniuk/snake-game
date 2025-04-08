@@ -11,9 +11,9 @@ def test_move_snake_wrap_right():
     assert new_snake[0] == (0,3) #pojawia sie po lewej
 
 def test_move_snake_wrap_up():
-    snake = [(3, 0)] #krawedz gorna
+    snake = [(3,4)] #krawedz gorna
     new_snake = move_snake_wrap(snake, "up", (5, 5))
-    assert new_snake[0] == (3, 4) #pojawia sie na dole
+    assert new_snake[0] == (3, 0) #pojawia sie na dole
 
 def test_move_snake_wrap_down():
     snake = [(2,0)] #krawedz dolna

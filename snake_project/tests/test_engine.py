@@ -8,7 +8,7 @@ from game_engine.engine import init_game_status
 #test standardowy
 def test_init_game_status_structure():
     #nowy stan gry z plansza plansza 8x8
-    status = init_game_status(8,8)
+    status = init_game_status((8,8))
 
     #sprawdzanie czy zwrócony słownik zawiera wymagane klucze i czy typy danych sa poprawne 
     assert "snake_position" in status
@@ -38,8 +38,10 @@ def test_update_game_state_no_collision_no_fruit_eaten():
 #sprawdzenie czy gra reaguje poprawnie na kolizje weza z samym soba - test brzegowy/błedny
 def test_update_game_status_collision():
     status = init_game_status()
-    status["snake_position"] = [(5,5), (5,6), (5,5)]    #waz dotyka sam siebie
+    status["snake_position"] = [(5,5), (5,6), (5,7)]    #cialo w pionie
+    status["direction"] = "up"                          #w gore, glowa uderzy w cialo(5,6) 
     status = update_game_status(status) 
+    assert status["lives"] == 2                         #3-1=2
     assert status["lives"] < 3                          #czy odjelo zycie? 3-1 = 2 <-> < 3
 
 
