@@ -7,6 +7,22 @@ Używany do przetwarzania ruchu, kolizji, punktów i parametrów gry.
 Układ współrzędnych: kartezjański (0, 0) w lewym dolnym rogu.
 Oś X rośnie w prawo, oś Y rośnie w górę.
 """
+import random
+
+def init_game_state(board_size = (10,10), start_position = (5,5), lives = 3):
+    fruit_x = random.randint(0, board_size[0] - 1)
+    fruit_y = random.randint(0, board_size[1] - 1)
+    status = {} #pusty słownik do którego dodajemy:
+
+    status["snake_position"] = [start_position]
+    status["direction"] = "right"
+    status["fruits"] = {(fruit_x, fruit_y): 1}
+    status["score"] = 0
+    status["speed"] = 1.0
+    status["lives"] = lives
+    status["game_over"] = False
+    status["board_size"] = board_size
+    return status
 
 # Przesuwa węża w zadanym kierunku, układ kartezjański (bez przenikania przez ściany).
 def move_snake(snake, direction):
