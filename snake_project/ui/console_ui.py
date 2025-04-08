@@ -41,10 +41,18 @@ class SnakeGameGUI:
                     outline = "gray"
                 )
 
-        for segemnt in self.status["snake_position"]:
+        for segemnt in self.status["snake_position"]: #rysowanie weza
             x, y = segemnt
             self.canvas.create_rectangle(
                 x * self.cell_size, y * self.cell_size,
                 (x+1) * self.cell_size, (y+1) * self.cell_size,
                 fill="green"
+            )
+
+        for fruit in self.status["fruits"]:
+            x, y =  fruit
+            self.canvas.create_oval(
+                x * self.cell_size, y * self.cell_size,
+                (x+1) * self.cell_size, (y+1) * self.cell_size,
+                fill="red"
             )
