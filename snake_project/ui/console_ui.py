@@ -12,7 +12,7 @@ class SnakeGameGUI:
         self.board_size = (20, 20)
         self.status = init_game_status(self.board_size)
 
-        self.canvas = tk.Canvas(root, width = self.canvas_size, height=self.canvas_size, bg="white")
+        self.canvas = tk.Canvas(root, width = self.canvas_size, height=self.canvas_size, bg="pink")
         self.canvas.pack()
 
         self.root.bind("<Key>", self.handle_key)
@@ -24,3 +24,8 @@ class SnakeGameGUI:
         if event.keysym in key_map:
             self.status["direction"] = key.map[event.keysym]
             self.status = update_game_status(self.status)
+
+            if self.status["game_over"]:
+                self.canvas.create_text(200, 200, text="GAME OVER", fill="red", font=("Arial", 24))
+            else:
+                self.update_ui()
