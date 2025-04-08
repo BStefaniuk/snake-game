@@ -17,3 +17,10 @@ class SnakeGameGUI:
 
         self.root.bind("<Key>", self.handle_key)
         self.update_ui()
+
+
+    def handle_key(self, event):
+        key_map = {"Up": "up", "Down": "down", "Left": "left", "Right": "right"}
+        if event.keysym in key_map:
+            self.status["direction"] = key.map[event.keysym]
+            self.status = update_game_status(self.status)
