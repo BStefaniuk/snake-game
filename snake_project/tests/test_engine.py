@@ -1,3 +1,6 @@
+
+#TESTY JEDNOSTKOWE
+
 from game_engine.engine import move_snake, check_collision, calculate_score
 from game_engine.engine import is_within_bounds
 
