@@ -1,7 +1,7 @@
 
 #TESTY JEDNOSTKOWE
 
-from game_engine.engine import move_snake, check_collision, calculate_score
+from game_engine.engine import move_snake, check_collision, calculate_score, collect_fruit, handle_speed_boost, update_lives
 from game_engine.engine import is_within_bounds
 from game_engine.engine import init_game_status
 
