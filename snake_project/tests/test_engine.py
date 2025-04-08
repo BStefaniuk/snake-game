@@ -35,6 +35,13 @@ def test_update_game_state_no_collision_no_fruit_eaten():
     assert status["lives"] == initial_lives #nie stracono zycia(brak kolizji)
     assert status["game_over"] is False #gra sie nie zakonczyla
 
+#sprawdzenie czy gra reaguje poprawnie na kolizje weza z samym soba - test brzegowy/błedny
+def test_update_game_status_collision():
+    status = init_game_status()
+    status["snake_position"] = [(5,5), (5,6), (5,5)]    #waz dotyka sam siebie
+    status = update_game_status(status) 
+    assert status["lives"] < 3                          #czy odjelo zycie? 3-1 = 2 <-> < 3
+
 
 def test_move_snake_up():
     snake = [(5, 5), (5, 4)]
