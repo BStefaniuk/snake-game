@@ -29,3 +29,14 @@ class SnakeGameGUI:
                 self.canvas.create_text(200, 200, text="GAME OVER", fill="red", font=("Arial", 24))
             else:
                 self.update_ui()
+
+
+    def update_ui(self):
+        self.canvas.delete("all")
+        for x in range(self.board_size[0]):
+            for y in range(self.board_size[1]):
+                self.canvas.create_rectangle(
+                    x * self.cell_size, y * self.cell_size, 
+                    (x + 1) * self.cell_size, (y + 1) * self.cell_size,
+                    outline = "gray"
+                )
