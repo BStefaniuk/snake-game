@@ -60,9 +60,10 @@ def test_update_game_status_eats_fruit():
 
 def test_update_game_status_game_over():
     status = init_game_status()
-
     status["lives"] = 1
-    status["snake_position"] = [(5, 5), (5, 6), (5, 5)]
+    #po ruchu "up" uderzy glowa w cialo
+    status["snake_position"] = [(5, 5), (5, 6), (5, 7)]
+    status["direction"] = "up"                          #glowa na 5,6
     
     status = update_game_status(status)
     assert status["game_over"] is True
