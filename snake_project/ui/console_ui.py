@@ -40,3 +40,11 @@ class SnakeGameGUI:
                     (x + 1) * self.cell_size, (y + 1) * self.cell_size,
                     outline = "gray"
                 )
+
+        for segemnt in self.status["snake_position"]:
+            x, y = segemnt
+            self.canvas.create_rectangle(
+                x * self.cell_size, y * self.cell_size,
+                (x+1) * self.cell_size, (y+1) * self.cell_size,
+                fill="green"
+            )
