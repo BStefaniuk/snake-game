@@ -24,6 +24,39 @@ def init_game_state(board_size = (10,10), start_position = (5,5), lives = 3):
     status["board_size"] = board_size
     return status
 
+def update_game_status(status, boost=False):
+    snake_position = status["snake_position"]
+    direction = status["direction"]
+    board_size = status["board_size"]
+
+    #ruch z przechodzeniem przez sciany
+    new_snake = move_snake_wrap(snake_position, direction, board_size)
+    status["snake_position"] = new_snake
+
+    #kolizja z samym sobą
+    if check_collision(new_snake):
+        #rozdzielenie dwóch wartości zwróconych przez update_lives
+        status["lives"], game_over = update_lives(status["lives"], True)
+        if game_over:
+            status["game_over"] = True
+            return status
+        
+    #glowa
+    head = new_snake[0]
+    #zbieranie owocu i pkt
+    score_before = status["score"]
+    status["score"], status["fruits"] = collect_fruit(head, status["fruits"], status["score"])
+
+    #zwiekszenie predkosci o 7% po zjedzeniu owocu(zdobyciu pkt)
+    if status["score"] > score_before:
+        status["speed"] = increase_speed(status["speed"])
+    
+    #przyspieszenie na przycisk
+    status["speed"] = handle_speed_boost(status["speed"], boost)
+
+    return status
+
+
 # Przesuwa węża w zadanym kierunku, układ kartezjański (bez przenikania przez ściany).
 def move_snake(snake, direction):
     head_x, head_y = snake[0]
@@ -87,10 +120,10 @@ def handle_speed_boost(speed, boost_pressed):
         return max(speed * 0.8, 0.2)  # nie szybciej niż 0.2
     return speed
 
-#PUNKTY ZYCIA - zmniejszanie żyć
+#PUNKTY ZYCIA - zmniejszanie żyć (aktualizacja żyć i powiedzenie czy gra się skończyła)
 def update_lives(lives, collided):
     if collided:
         lives -= 1
         if lives <= 0:
-            return 0, True
-    return lives, False
+            return 0, True  #nowe życia, czy gra się skończyła
+    return lives, False 
