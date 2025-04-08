@@ -2,14 +2,15 @@
 #TESTY JEDNOSTKOWE
 
 from game_engine.engine import move_snake, check_collision, calculate_score, collect_fruit, handle_speed_boost, update_lives
-from game_engine.engine import is_within_bounds
+from game_engine.engine import is_within_bounds, update_game_status
 from game_engine.engine import init_game_status
 
+#test standardowy
 def test_init_game_status_structure():
     #nowy stan gry z plansza plansza 8x8
     status = init_game_status(8,8)
 
-    #sprawdzanie czy zwrócony słownik zawiera wymagane klucze i czy typy danych sa poprawne
+    #sprawdzanie czy zwrócony słownik zawiera wymagane klucze i czy typy danych sa poprawne 
     assert "snake_position" in status
     assert "fruits" in status
     assert "score" in status
@@ -23,6 +24,16 @@ def test_init_game_status_minimum_board_size():
     width, height = status["board_size"]
     assert width >= 5
     assert height >= 5
+
+#sprawdzenie czy normalny ruch dziala i nie wywoluje bledow - test standardowy
+def test_update_game_state_no_collision_no_fruit_eaten():
+    status = init_game_status()
+    initial_score = status["score"]
+    initial_lives = status["lives"]
+    status = update_game_status(status) #1 krok gry
+    assert status["score"] == initial_score #nie dodano pkt(nie zjedzony owoc)
+    assert status["lives"] == initial_lives #nie stracono zycia(brak kolizji)
+    assert status["game_over"] is False #gra sie nie zakonczyla
 
 
 def test_move_snake_up():
