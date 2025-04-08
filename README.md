@@ -55,5 +55,3 @@ Projekt nr 1 - Gra "Snake" wykonana w języku python
 > Silnik gry (engine.py) nie zawiera żadnych odwołań do I/O (brak `print`, `input`, `tkinter` itp.) – jego funkcje są testowalne i całkowicie niezależne od GUI.
 
 ---
-
-Jeśli chcesz, mogę od razu ten plik zapisać jako `README.md` w Twoim projekcie. Chcesz?
