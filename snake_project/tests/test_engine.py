@@ -17,6 +17,13 @@ def test_init_game_status_structure():
     assert isinstance(status["snake_position"], list)
     assert isinstance(status["fruits"], dict)
 
+#sprawdzenie czy ustawił plansze z minimalnym rozmiarem(5x5) - test brzegowy
+def test_init_game_status_minimum_board_size():
+    status = init_game_status((5,5));
+    width, height = status["board_size"]
+    assert width >= 5
+    assert height >= 5
+
 
 def test_move_snake_up():
     snake = [(5, 5), (5, 4)]
