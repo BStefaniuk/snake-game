@@ -44,6 +44,19 @@ def test_update_game_status_collision():
     assert status["lives"] == 2                         #3-1=2
     assert status["lives"] < 3                          #czy odjelo zycie? 3-1 = 2 <-> < 3
 
+def test_update_game_status_eats_fruit():
+    status = init_game_status()
+    
+    status["snake_position"] = [(5, 5)]   #ustawiamy owoc przed glowa weza
+    status["fruits"] = {(6, 5): 1}
+    status["direction"] = "right"
+    score_before = status["score"]
+    speed_before = status["speed"]
+    
+    status = update_game_status(status)
+    assert status["score"] > score_before
+    assert status["speed"] > speed_before
+    assert (6, 5) not in status["fruits"]
 
 def test_move_snake_up():
     snake = [(5, 5), (5, 4)]

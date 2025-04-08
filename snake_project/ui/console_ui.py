@@ -22,7 +22,7 @@ class SnakeGameGUI:
     def handle_key(self, event):
         key_map = {"Up": "up", "Down": "down", "Left": "left", "Right": "right"}
         if event.keysym in key_map:
-            self.status["direction"] = key.map[event.keysym]
+            self.status["direction"] = key_map[event.keysym]
             self.status = update_game_status(self.status)
 
             if self.status["game_over"]:
@@ -56,3 +56,4 @@ class SnakeGameGUI:
                 (x+1) * self.cell_size, (y+1) * self.cell_size,
                 fill="red"
             )
+
