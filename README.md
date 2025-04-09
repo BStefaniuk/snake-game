@@ -26,10 +26,3 @@ Projekt nr 1 - Gra "Snake" wykonana w języku python
     python -m pytest
     ```
 ---
-
-## 👥 Skład zespołu
-
-- s27929 – odpowiedzialny za **logikę gry (silnik)**, testy jednostkowe
-- s28751 – odpowiedzialny za **interfejs użytkownika (GUI)** w Tkinterze
-
----
