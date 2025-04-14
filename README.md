@@ -25,4 +25,20 @@ Projekt nr 1 - Gra "Snake" wykonana w języku python
     ```
     python -m pytest
     ```
+
+## ☁️ Jak uruchomić projekt z bazą danych?
+
+1. Utwórz plik ```.env``` na wzór ```.env.example```.
+
+2. Uzupełnij dane logowania do MongoDB Atlas w ```.env```:
+    ```
+
+    MONGO_URI=mongodb+srv://<username>:<password>@<host>/?retryWrites=true&w=majority
+    ```
+
+3. Upewnij się, że masz zainstalowane:
+    ```
+
+    pip install pymongo python-dotenv
+    ```
 ---
