@@ -33,7 +33,7 @@ def get_user_games(nick: str):
         games.find({"nick": nick})      #lista gier uzytkownika
     )
 
-def get_useres_list():
+def get_users_list():
     return list(
         users.find()            #list graczy
     )
