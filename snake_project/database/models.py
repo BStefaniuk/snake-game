@@ -5,7 +5,7 @@ db = get_db()
 users = db["users"]     ##gracze
 games = db["games"]     ##dane o rozegranych grach
 
-        #CRUD( Create, Read, Update, Delete)
+         #CRUD( Create, Read, Update, Delete)
 #Create
 def add_user(nick: str, score: int = 0, map_size: str = "10x10"):
     return users.insert_one({
@@ -47,3 +47,21 @@ def get_top_score():
     return games.find_one(      #zwraca jeden wynik
         sort=[("score", -1)]    #sortuje malejaco, najlepszy wynik jako pierwszy
     )
+
+#Update
+def update_user_data(nick: str, score: int = None, map_size: str = None):
+    update_fileds = {}          #pusty slownik jest traktowany jako False
+
+    if score is not None:
+        update_fileds["score"] = score
+
+    if map_size is not None:
+        update_fileds["map_size"] = map_size
+
+    if update_fileds:
+        return users.update_one(
+            {"nick": nick},
+            {"$set": update_fileds}
+        )
+    
+    return None
