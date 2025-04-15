@@ -35,3 +35,11 @@ def test_update_user_data():
 
     assert updated_user["score"] == 100
     assert updated_user["map_size"] == "15x15"
+
+#Delete
+def test_delete_user():
+    add_user("todelete", score=25)
+    delete_user("todelete")
+    deleted_user = get_user("todelete")
+
+    assert deleted_user is None
