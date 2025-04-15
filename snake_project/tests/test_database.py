@@ -8,10 +8,13 @@ def test_connection():
     
     assert db is not None
 
-def test_add_user():
-    users.insert_one({"nickname":"test_user","score":10})
-    found = users.find_one({"nickname":"test_user"})
+#Create
 
-    assert found is not None
-    assert found["score"] == 10
+def test_add_user():
+    add_user("test_user", score=50, map_size="20x20")
+    found_user = get_user("test_user")
+
+    assert found_user is not None
+    assert found_user["score"] == 50
+    assert found_user["map_size"] == "20x20"
 
