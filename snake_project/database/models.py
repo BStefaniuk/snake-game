@@ -50,18 +50,18 @@ def get_top_score():
 
 #Update
 def update_user_data(nick: str, score: int = None, map_size: str = None):
-    update_fileds = {}          #pusty slownik jest traktowany jako False
+    update_fields = {}          #pusty slownik jest traktowany jako False
 
     if score is not None:
-        update_fileds["score"] = score
+        update_fields["score"] = score
 
     if map_size is not None:
-        update_fileds["map_size"] = map_size
+        update_fields["map_size"] = map_size
 
-    if update_fileds:
+    if update_fields:
         return users.update_one(
             {"nick": nick},
-            {"$set": update_fileds}
+            {"$set": update_fields}
         )
     
     return None #jak nic do aktualizacji to nic nie zwraca
