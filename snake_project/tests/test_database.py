@@ -26,3 +26,12 @@ def test_get_user():
 
     assert user is not None
     assert user["nick"] == "toread"
+
+#Update
+def test_update_user_data():
+    add_user("toupdate", score=15)
+    update_user_data("toupdate", score=100, map_size="15x15")
+    updated_user = get_user("toupdate")
+
+    assert updated_user["score"] == 100
+    assert updated_user["map_size"] == "15x15"
