@@ -1,5 +1,6 @@
 from snake_project.database.db import get_db
 from snake_project.database.models import users
+from snake_project.database.models import (add_game, add_user, update_user_data, delete_user, get_user, get_user_games, get_users_list, get_games_list, get_top_score, delete_all_users, delete_all_games)
 
 def test_connection():
     db = get_db()
@@ -13,3 +14,4 @@ def test_add_user():
 
     assert found is not None
     assert found["score"] == 10
+
