@@ -64,4 +64,19 @@ def update_user_data(nick: str, score: int = None, map_size: str = None):
             {"$set": update_fileds}
         )
     
-    return None
+    return None #jak nic do aktualizacji to nic nie zwraca
+
+#Delete
+def delete_user(nick: str):
+    users.delete_one({
+        "nick": nick        #usuwa danego uzytkownika
+    })
+    games.delete_many({
+        "nick": nick        #usuwa cala historie gier uzytkownika
+    })
+
+def delete_all_users():
+    users.delete_many({})
+
+def delete_all_games():
+    games.delete_many({})
