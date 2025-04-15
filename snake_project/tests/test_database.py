@@ -18,3 +18,11 @@ def test_add_user():
     assert found_user["score"] == 50
     assert found_user["map_size"] == "20x20"
 
+#Read
+
+def test_get_user():
+    add_user("toread", score=10)
+    user = get_user("toread")
+
+    assert user is not None
+    assert user["nick"] == "toread"
