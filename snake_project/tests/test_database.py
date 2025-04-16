@@ -61,6 +61,13 @@ def test_get_games_list():
     assert isinstance(result, list)
     assert any(user["nick"] == "user1" for user in result)
 
+def test_get_top_score():
+    add_game("top_player", "2025-04-16", 10, 100)
+    top = get_top_score()
+    
+    assert top is not None
+    assert "score" in top
+
 
 #Update
 def test_update_user_data():
