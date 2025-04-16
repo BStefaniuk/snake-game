@@ -93,3 +93,10 @@ def test_delete_all_users():
     all_users = list(user.find())
 
     assert len(all_users) == 0
+
+def test_delete_all_games():
+    add_game("deletegame", "2025-04-16", 10, 20)
+    delete_all_games()
+    all_games = list(games.find())
+
+    assert len(all_games) == 0
