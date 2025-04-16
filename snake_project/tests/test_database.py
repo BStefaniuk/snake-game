@@ -24,10 +24,10 @@ def test_add_user():
     assert found_user["map_size"] == "20x20"
 
 def test_add_game():
-    add_game("user1", "2025-04-14", 60.5, 200)
+    add_game("user1", "2025-04-14", 50.0, 100)
     games_for_user = get_user_games("user1")
 
-    assert any(game["score"] == 200 for game in games_for_user)
+    assert any(game["score"] == 100 for game in games_for_user)
 
 #Read
 
@@ -39,20 +39,28 @@ def test_get_user():
     assert user["nick"] == "toread"
 
 def test_get_user_games():
-    add_user("gamer", score = 0)
-    add_game("gamer", "2025-04-16", 30, 100)
-    result = get_user_games("gamer")
+    add_user("user1", score = 0)
+    add_game("user1", "2025-04-16", 30, 100)
+    result = get_user_games("user1")
 
     assert isinstance(result, list)
     assert len(result) > 0
 
 def test_get_users_list():
-    add_user("u1")
-    add_user("u2")
+    add_user("user1")
+    add_user("user2")
     result = get_users_list()
 
     assert isinstance(result, list)
-    assert any(user["nick"] == "u1" for user in result)
+    assert any(user["nick"] == "user1" for user in result)
+
+def test_get_games_list():
+    add_game("user1", "2025-04-16", 10, 100)
+    result = get_games_list()
+
+    assert isinstance(result, list)
+    assert any(user["nick"] == "user1" for user in result)
+
 
 #Update
 def test_update_user_data():
