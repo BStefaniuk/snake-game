@@ -26,6 +26,7 @@ def test_add_user():
 def test_add_game():
     add_game("user1", "2025-04-14", 60.5, 200)
     games_for_user = get_user_games("user1")
+
     assert any(game["score"] == 200 for game in games_for_user)
 
 #Read
@@ -36,6 +37,14 @@ def test_get_user():
 
     assert user is not None
     assert user["nick"] == "toread"
+
+def test_get_user_games():
+    add_user("gamer", score = 0)
+    add_game("gamer", "2025-04-16", 30, 100)
+    result = get_user_games("gamer")
+
+    assert isinstance(result, list)
+    assert len(result) > 0
 
 #Update
 def test_update_user_data():
