@@ -7,6 +7,7 @@ games = db["games"]     ##dane o rozegranych grach
 
          #CRUD( Create, Read, Update, Delete)
 #Create
+#MongoDB ma swoj wlasny unikalny _id tworzony automatycznie
 def add_user(nick: str, score: int = 0, map_size: str = "10x10"):
     return users.insert_one({
         "nick": nick, 
