@@ -64,7 +64,7 @@ def test_get_games_list():
 def test_get_top_score():
     add_game("top_player", "2025-04-16", 10, 100)
     top = get_top_score()
-    
+
     assert top is not None
     assert "score" in top
 
@@ -81,7 +81,7 @@ def test_update_user_data():
 #Delete
 def test_delete_user():
     add_user("todelete", score=25)
+    add_game("todelete", "2025-04-16", 20, 100)
     delete_user("todelete")
-    deleted_user = get_user("todelete")
 
-    assert deleted_user is None
+    assert get_user("todelete") is None
