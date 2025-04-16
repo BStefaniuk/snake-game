@@ -85,3 +85,11 @@ def test_delete_user():
     delete_user("todelete")
 
     assert get_user("todelete") is None
+
+def test_delete_all_users():
+    add_user("todelete1")
+    add_user("todelete2")
+    delete_all_users()
+    all_users = list(user.find())
+
+    assert len(all_users) == 0
