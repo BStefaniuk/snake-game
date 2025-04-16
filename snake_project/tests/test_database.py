@@ -90,7 +90,7 @@ def test_delete_all_users():
     add_user("todelete1")
     add_user("todelete2")
     delete_all_users()
-    all_users = list(user.find())
+    all_users = list(users.find())
 
     assert len(all_users) == 0
 
