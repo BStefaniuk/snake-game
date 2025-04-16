@@ -46,6 +46,14 @@ def test_get_user_games():
     assert isinstance(result, list)
     assert len(result) > 0
 
+def test_get_users_list():
+    add_user("u1")
+    add_user("u2")
+    result = get_users_list()
+
+    assert isinstance(result, list)
+    assert any(user["nick"] == "u1" for user in result)
+
 #Update
 def test_update_user_data():
     add_user("toupdate", score=15)
