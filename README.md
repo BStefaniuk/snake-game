@@ -10,6 +10,7 @@ Projekt nr 1 - Gra "Snake" wykonana w języku python w ramach przedmiotu PPY z g
 Zainstaluj wszystkie zależności:
 ```bash
 pip install -r requirements.txt
+```
 
 ## ▶️ Jak uruchomić grę?
 
