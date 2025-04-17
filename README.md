@@ -2,7 +2,7 @@
 Projekt nr 1 - Gra "Snake" wykonana w języku python w ramach przedmiotu PPY z graficznym interfejsem oraz integracją z bazą danych MongoDB Atlas.
 
 ---
-## ▶️ Wymagania
+## ⚙️ Wymagania
 
 - Python 3.10+ (testowane na 3.13.3)
 - MongoDB Atlas (darmowe konto)
