@@ -83,7 +83,34 @@ def delete_all_users():
 def delete_all_games():
     games.delete_many({})
 
+#Zapisywanie danych do CSV/JSON po zamknięciu aplikacji
 def save_data(filename="data_backup.json"):
     data = get_games_list()
     with open(filename, "w", encoding = "utf-8") as file:
         json.dump(data, file, indent = 4, default = str)
+
+#wczytanie danych
+def load_data_from_file(filename="data_backup.json"):
+    try:
+        #{} - wszystkie dokumenty w kolekcji games
+        if games.count_documents({}) > 0:
+            print(f"Baza danych nie jest pusta")
+            return
+        with open(filename, "r", encoding = "utf-8") as file:
+            data = json.loads(file)
+            #czy data to lista
+            if isinstance(data, list):
+                if data:
+                    games.insert_many(data)
+                    print(f"Wczytano {len(data)} rekordow z pliku {filename}")
+                else:
+                    print(f"Nie znaleziono listy rekordow w pliku {filename}")
+            elif isinstance(data, dict):
+                games.insert_one(data)
+                print(f"Wczytano 1 rekord z pliku {filename}")
+            else:
+                print(f"Nieprawidlowy format danych w pliku {filename}")
+    except FileNotFoundError:
+        print(f"Plik {filename} nie istnieje")
+    except Exception as e:
+        print(f"Blad podczas wczytywania danych z pliku {filename}: {e}")
