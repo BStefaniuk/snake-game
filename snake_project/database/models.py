@@ -1,4 +1,5 @@
 from .db import get_db
+import json
 
 db = get_db()
 
@@ -81,3 +82,8 @@ def delete_all_users():
 
 def delete_all_games():
     games.delete_many({})
+
+def save_data(filename="data_backup.json"):
+    data = get_games_list()
+    with open(filename, "w", encoding = "utf-8") as file:
+        json.dump(data, file, indent = 4, default = str)
