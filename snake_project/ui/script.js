@@ -19,7 +19,7 @@ function getCellIndex(x, y){
 //rysowanie weza i owocow
 function drawGameState(state){
     drawEmptyBoard();
-    const cell = document.getElementsByClassName("cell");
+    const cells = document.getElementsByClassName("cell");
 
     state.snake_position.forEach(([x, y]) => {
         const index = getCellIndex(x, y);
