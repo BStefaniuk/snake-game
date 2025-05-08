@@ -12,8 +12,8 @@ function drawEmptyBoard(){
     }
 }
 
-function getCellIndex(x, y){
-    return y * boardSize + x;
+function getCellIndex(x, y) {
+    return (boardSize - 1 - y) * boardSize + x;
 }
 
 //rysowanie weza i owocow

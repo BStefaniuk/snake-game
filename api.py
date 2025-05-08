@@ -36,10 +36,15 @@ def get_state():
 def move():
     global game_status
     data = request.get_json()
-    direction = data.get("direction")
-    if direction:
-        game_status["direction"] = direction
+    new_direction = data.get("direction")
+    if new_direction:
+        current = game_status["direction"]
+        opposite = {"up": "down", "down": "up", "left": "right", "right": "left"}
+        if new_direction != opposite.get(current):
+            game_status["direction"] = new_direction
+
         game_status = update_game_status(game_status)
+
     return jsonify(convert_status_to_json_safe(game_status))
 
 if __name__ == "__main__":

@@ -29,33 +29,54 @@ def update_game_status(status, boost=False):
     direction = status["direction"]
     board_size = status["board_size"]
 
-    #ruch z przechodzeniem przez sciany
-    new_snake = move_snake_wrap(snake_position, direction, board_size)
+    # oblicz nową głowę
+    head_x, head_y = snake_position[0]
+    if direction == "up":
+        new_head = (head_x, (head_y + 1) % board_size[1])
+    elif direction == "down":
+        new_head = (head_x, (head_y - 1) % board_size[1])
+    elif direction == "left":
+        new_head = ((head_x - 1) % board_size[0], head_y)
+    elif direction == "right":
+        new_head = ((head_x + 1) % board_size[0], head_y)
+    else:
+        raise ValueError("Invalid direction")
+
+    # sprawdź czy będzie zjedzony owoc
+    score_before = status["score"]
+    will_grow = new_head in status["fruits"]
+
+    # wykonaj ruch (z rośnięciem lub nie)
+    new_snake = move_snake_grow(snake_position, direction, board_size, grow=will_grow)
     status["snake_position"] = new_snake
 
-    #kolizja z samym sobą
+    # kolizja z samym sobą
     if check_collision(new_snake):
-        #rozdzielenie dwóch wartości zwróconych przez update_lives
         status["lives"], game_over = update_lives(status["lives"], True)
         if game_over:
             status["game_over"] = True
             return status
-        
-    #glowa
-    head = new_snake[0]
-    #zbieranie owocu i pkt
-    score_before = status["score"]
-    status["score"], status["fruits"] = collect_fruit(head, status["fruits"], status["score"])
 
-    #zwiekszenie predkosci o 7% po zjedzeniu owocu(zdobyciu pkt)
+    # zbieranie owocu
+    status["score"], status["fruits"] = collect_fruit(new_snake[0], status["fruits"], status["score"])
+    # Dodanie nowego owocu w losowym miejscu, jeśli zjedzono
+    if will_grow:
+        while True:
+            fruit_x = random.randint(0, board_size[0] - 1)
+            fruit_y = random.randint(0, board_size[1] - 1)
+            new_fruit_pos = (fruit_x, fruit_y)
+            if new_fruit_pos not in status["snake_position"] and new_fruit_pos not in status["fruits"]:
+                status["fruits"][new_fruit_pos] = 1
+                break
+
+    # zwiększenie prędkości po zdobyciu punktu
     if status["score"] > score_before:
         status["speed"] = increase_speed(status["speed"])
-    
-    #przyspieszenie na przycisk
+
+    # przyspieszenie na klawisz
     status["speed"] = handle_speed_boost(status["speed"], boost)
 
     return status
-
 
 # Przesuwa węża w zadanym kierunku, układ kartezjański (bez przenikania przez ściany).
 def move_snake(snake, direction):
@@ -96,6 +117,26 @@ def move_snake_wrap(snake, direction, board_size):
     else:
         raise ValueError("Invalid direction")
     return [new_head] + snake[:-1]
+
+# Ruch z opcją rośnięcia
+def move_snake_grow(snake, direction, board_size, grow):
+    head_x, head_y = snake[0]
+    if direction == "up":
+        new_head = (head_x, (head_y + 1) % board_size[1])
+    elif direction == "down":
+        new_head = (head_x, (head_y - 1) % board_size[1])
+    elif direction == "left":
+        new_head = ((head_x - 1) % board_size[0], head_y)
+    elif direction == "right":
+        new_head = ((head_x + 1) % board_size[0], head_y)
+    else:
+        raise ValueError("Invalid direction")
+    
+    if grow:
+        return [new_head] + snake
+    else:
+        return [new_head] + snake[:-1]
+
 
 # Zwiększa prędkość węża o 7% po zjedzeniu owocu.
 def increase_speed(current_speed):
