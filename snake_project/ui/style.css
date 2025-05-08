@@ -5,12 +5,17 @@
     gap: 1px;
     background-color: black;
     margin-top: 20px;
+    width: fit-content;
+    height: fit-content;
+    border: 2px solid black;
+    padding: 1px;
 }
 
 .cell {
     width:30px;
     height: 30px;
     background-color: #ddd;
+    border: 1px solid grey;
 }
 
 .snake{
