@@ -42,17 +42,23 @@ function drawGameState(state){
 async function fetchGameState(){
     const res = await fetch("http://127.0.0.1:5000/api/game/state");
     const data = await res.json();
+    currentState = data;
     drawGameState(data);
 }
 
 //wysylanie kierunku do backendu
+let currentState = null; // przechowujemy ostatni stan gry
+
 async function sendMove(direction){
-    const res = await fetch("http://127.0.0.1:5000/api/game/move",{
+    if (currentState && currentState.game_over) return; // jeśli koniec gry – nie ruszaj
+
+    const res = await fetch("http://127.0.0.1:5000/api/game/move", {
         method: "POST",
         headers: {"Content-Type": "application/json"},
-        body: JSON.stringify({direction})
+        body: JSON.stringify({ direction })
     });
     const data = await res.json();
+    currentState = data; // zapisz nowy stan
     drawGameState(data);
 }
 
