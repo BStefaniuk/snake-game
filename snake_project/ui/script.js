@@ -1,6 +1,9 @@
 const board = document.getElementById("board");
 const statusText = document.getElementById("status");
 const boardSize = 10;
+let moveInterval = null;
+let direction = "right";
+
 
 //tworzenie planszy 
 function drawEmptyBoard(){
@@ -43,23 +46,34 @@ async function fetchGameState(){
     const res = await fetch("http://127.0.0.1:5000/api/game/state");
     const data = await res.json();
     currentState = data;
+    direction = data.direction;
     drawGameState(data);
+
+    moveInterval = setInterval(sendMove, 1000 / data.speed);
 }
 
 //wysylanie kierunku do backendu
 let currentState = null; // przechowujemy ostatni stan gry
 
-async function sendMove(direction){
-    if (currentState && currentState.game_over) return; // jeśli koniec gry – nie ruszaj
+async function sendMove(){
+    if (currentState?.game_over) return;
 
     const res = await fetch("http://127.0.0.1:5000/api/game/move", {
         method: "POST",
-        headers: {"Content-Type": "application/json"},
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ direction })
     });
     const data = await res.json();
-    currentState = data; // zapisz nowy stan
+    currentState = data;
     drawGameState(data);
+
+    if (data.game_over) {
+        clearInterval(moveInterval); // zatrzymane ruchu
+    } else {
+        //nowy interwal z ustawieniem predkosci
+        clearInterval(moveInterval);
+        moveInterval = setInterval(sendMove, 1000 / data.speed);
+    }
 }
 
 //obsluga klawiszy
@@ -74,12 +88,21 @@ document.addEventListener("keydown", (e) => {
         a: "left",
         d: "right"
     };
+    const newDir = keyMap[e.key]; // klawisz na kierunek 'ArrowUp' -> 'up'
+    if (newDir && currentState) {
+        //przeciwny kierunek
+        const opposite = {
+            up: "down",
+            down: "up",
+            left: "right",
+            right: "left"
+        };
 
-    const direction = keyMap[e.key];
-    if(direction){
-        sendMove(direction);
+        //jak nowy kierunek nie jest przeciwny
+        if (newDir !== opposite[currentState.direction]) {
+            direction = newDir;
+        }
     }
 });
-
 //start gry
 fetchGameState();
