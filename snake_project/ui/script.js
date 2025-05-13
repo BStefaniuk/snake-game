@@ -1,8 +1,15 @@
 const board = document.getElementById("board");
 const statusText = document.getElementById("status");
-const boardSize = 10;
+const timerText = document.getElementById("timer");
+const gameTitle = document.getElementById("game-title");
+
+let boardSize = 10;
 let moveInterval = null;
 let direction = "right";
+let currentState = null; // przechowujemy ostatni stan gry
+let timerInterval = null;
+let gameStartTime = null;
+let isPaused = false;
 
 
 //tworzenie planszy 
@@ -26,37 +33,59 @@ function drawGameState(state){
 
     state.snake_position.forEach(([x, y]) => {
         const index = getCellIndex(x, y);
-        cells[index].classList.add("snake");
+        cells[index]?.classList.add("snake");
     });
 
     state.fruits.forEach(fruit => {
         const index = getCellIndex(fruit.x, fruit.y);
-        cells[index].classList.add("fruit");
+        cells[index]?.classList.add("fruit");
     });
 
     if(state.game_over){
         statusText.textContent = "GAME OVER";
+        stopGameTimer();
     }else{
         statusText.textContent = `Score: ${state.score}`;
     }
 }
+
+function startGameTimer(){
+    gameStartTime = Date.now();
+    timerInterval = setInterval(() => {
+        const elapsed = Math.floor((Date.now() - gameStartTime) / 1000);
+        timerText.textContent = `Czas gry: ${elapsed}s`;
+    }, 1000);
+}
+
+function stopGameTimer(){
+    clearInterval(timerInterval);
+}
+
 
 //pobieranie stanu z backendu
 async function fetchGameState(){
     const res = await fetch("http://127.0.0.1:5000/api/game/state");
     const data = await res.json();
     currentState = data;
+    boardSize = data.board_size[0];
     direction = data.direction;
-    drawGameState(data);
 
+    drawGameState(data);
+    drawEmptyBoard();
+
+    gameTitle.style.display = "block";
+    board.style.display = "grid";
+    statusText.style.display = "block";
+    timerText.style.display = "block";
+
+    startGameTimer();
     moveInterval = setInterval(sendMove, 1000 / data.speed);
 }
 
 //wysylanie kierunku do backendu
-let currentState = null; // przechowujemy ostatni stan gry
 
 async function sendMove(){
-    if (currentState?.game_over) return;
+    if (isPaused || currentState?.game_over) return;
 
     const res = await fetch("http://127.0.0.1:5000/api/game/move", {
         method: "POST",
@@ -88,6 +117,12 @@ document.addEventListener("keydown", (e) => {
         a: "left",
         d: "right"
     };
+
+    if(e.key === "p" || e.key === "P"){
+        isPaused = true;
+        return;
+    }
+
     const newDir = keyMap[e.key]; // klawisz na kierunek 'ArrowUp' -> 'up'
     if (newDir && currentState) {
         //przeciwny kierunek
@@ -104,5 +139,26 @@ document.addEventListener("keydown", (e) => {
         }
     }
 });
-//start gry
-fetchGameState();
+
+document.getElementById("start-button").addEventListener("click", async () => {
+    const nick = document.getElementById("nickname").value.trim();
+    const size = parseInt(document.getElementById("board-size").value);
+
+    if( !nick || isNaN(size) || size < 5 || size > 25){
+        alert("Podaj nick i rozmiar planszy z zakresu 5-25");
+        return;
+    }
+
+    const res = await fetch("http://127.0.0.1:5000/api/game/init", {
+        method: "POST",
+        headers: {"Content-Type": "application/json"},
+        body: JSON.stringify({ nick: nick, size: size})
+    });
+
+    const data = await res.json();
+    currentState = data;
+    direction = data.direction;
+
+    document.getElementById("start-screen").style.display = "none";
+    fetchGameState();
+});

@@ -2,13 +2,26 @@
 <html lang="p1">
     <head>
         <meta charset="UTF-8">
-        <title>Snake Game UI</title>
+        <title>Candy Snake</title>
         <link rel="stylesheet" href="style.css">
     </head>
     <body>
-        <h1>Candy Snake</h1>
-        <div id="board" class="board"></div>
-        <p id="status"></p>
+        <div id="start-screen">
+            <h2>Rozpocznij grę</h2>
+            <label>
+                Podaj nick:
+                <input type="text" id="nickname" required>
+            </label><br><br>
+            <label>
+                Rozmiar planszy (5-25):
+                <input type="number" id="board-size" min="5" max="25" required>
+            </label><br><br>
+            <button id="start-button">Start</button>
+        </div>
+        <h1 id="game-title" style="display:none;">Candy Snake</h1>
+        <div id="board" class="board" style="display:none;"></div>
+        <p id="status" style="display:none;"></p>
+        <p id="timer" style="display:none;">Czas gry: 0s</p>
         <script src="script.js"></script>
     </body>
 </html>
