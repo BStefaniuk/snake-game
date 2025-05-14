@@ -4,6 +4,7 @@ const timerText = document.getElementById("timer");
 const gameTitle = document.getElementById("game-title");
 const pause = document.getElementById("pause");
 
+let gameStarted = false;
 let boardSize = 10;
 let moveInterval = null;
 let direction = "right";
@@ -139,8 +140,8 @@ document.addEventListener("keydown", (e) => {
         d: "right"
     };
 
-    if(e.key === "p" || e.key === "P"){
-        if (!currentState?.game_over) {
+    if (e.key === "p" || e.key === "P") {
+        if (gameStarted && !currentState?.game_over) {
             if (isPaused) resumeGame();
             else pauseGame();
         }
@@ -184,5 +185,6 @@ document.getElementById("start-button").addEventListener("click", async () => {
     direction = data.direction;
 
     document.getElementById("start-screen").style.display = "none";
+    gameStarted = true;
     fetchGameState();
 });
