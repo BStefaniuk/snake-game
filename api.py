@@ -4,6 +4,7 @@ from flask import request           #do odczytywania danych
 from flask_cors import CORS         #laczenie z backend
 from snake_project.game_engine.engine import init_game_status
 from snake_project.game_engine.engine import update_game_status
+from snake_project.database.models import add_user
 
 app = Flask(__name__)
 CORS(app)
@@ -45,6 +46,23 @@ def move():
 
         game_status = update_game_status(game_status)
 
+    return jsonify(convert_status_to_json_safe(game_status))
+
+#POST - start gry z nickiem i rozmiarem planszy 
+@app.route("/api/game/init", methods = ["POST"])
+def init_game():
+    global game_status          #modyfikacja zmiennej spoza funkcji
+    data = request.get_json()   #odczytane dane z frontendu
+    nick = data.get("nick", "guest")    #domyslne
+    size = int(data.get("size", 10))    #domyslne
+    #nowy stan gry
+    game_status = init_game_status(
+        board_size = (size, size),
+        start_position = (size // 2, size // 2),    #srodek planszy
+        lives = 1
+    )
+    #zapis danych do bazy
+    add_user(nick = nick, map_size = f"{size} x {size}")
     return jsonify(convert_status_to_json_safe(game_status))
 
 if __name__ == "__main__":

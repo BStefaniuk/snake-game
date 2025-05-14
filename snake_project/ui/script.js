@@ -7,9 +7,9 @@ let boardSize = 10;
 let moveInterval = null;
 let direction = "right";
 let currentState = null; // przechowujemy ostatni stan gry
-let timerInterval = null;
-let gameStartTime = null;
 let isPaused = false;
+let pausedTime = 0;
+let pauseStartedAt = null;
 
 
 //tworzenie planszy 
@@ -49,18 +49,34 @@ function drawGameState(state){
     }
 }
 
-function startGameTimer(){
+function startGameTimer() {
     gameStartTime = Date.now();
-    timerInterval = setInterval(() => {
-        const elapsed = Math.floor((Date.now() - gameStartTime) / 1000);
-        timerText.textContent = `Czas gry: ${elapsed}s`;
-    }, 1000);
+    timerInterval = setInterval(updateTimer, 1000);
+}
+
+function updateTimer() {
+    const now = Date.now();
+    const elapsed = Math.floor((now - gameStartTime - pausedTime) / 1000);
+    timerText.textContent = `Czas gry: ${elapsed}s`;
 }
 
 function stopGameTimer(){
     clearInterval(timerInterval);
 }
 
+function pauseGame() {
+    isPaused = true;
+    pauseStartedAt = Date.now();
+    clearInterval(moveInterval);
+    clearInterval(timerInterval);
+}
+
+function resumeGame() {
+    isPaused = false;
+    pausedTime += Date.now() - pauseStartedAt;
+    timerInterval = setInterval(updateTimer, 1000);
+    moveInterval = setInterval(sendMove, 1000 / currentState.speed);
+}
 
 //pobieranie stanu z backendu
 async function fetchGameState(){
@@ -68,6 +84,8 @@ async function fetchGameState(){
     const data = await res.json();
     currentState = data;
     boardSize = data.board_size[0];
+    board.style.gridTemplateColumns = `repeat(${boardSize}, 30px)`;
+    board.style.gridTemplateRows = `repeat(${boardSize}, 30px)`;
     direction = data.direction;
 
     drawGameState(data);
@@ -119,7 +137,10 @@ document.addEventListener("keydown", (e) => {
     };
 
     if(e.key === "p" || e.key === "P"){
-        isPaused = true;
+        if (!currentState?.game_over) {
+            if (isPaused) resumeGame();
+            else pauseGame();
+        }
         return;
     }
 
