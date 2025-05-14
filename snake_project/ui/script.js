@@ -2,6 +2,7 @@ const board = document.getElementById("board");
 const statusText = document.getElementById("status");
 const timerText = document.getElementById("timer");
 const gameTitle = document.getElementById("game-title");
+const pause = document.getElementById("pause");
 
 let boardSize = 10;
 let moveInterval = null;
@@ -69,6 +70,7 @@ function pauseGame() {
     pauseStartedAt = Date.now();
     clearInterval(moveInterval);
     clearInterval(timerInterval);
+    pause.style.display = "block";
 }
 
 function resumeGame() {
@@ -76,6 +78,7 @@ function resumeGame() {
     pausedTime += Date.now() - pauseStartedAt;
     timerInterval = setInterval(updateTimer, 1000);
     moveInterval = setInterval(sendMove, 1000 / currentState.speed);
+    pause.style.display = "none";
 }
 
 //pobieranie stanu z backendu

@@ -55,3 +55,16 @@ h1 {
     margin-top: 15px;
     color: #d63384;
 }
+
+#pause {
+    position: absolut;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 48px;
+    color: #d63384;
+    font-weight: bold;
+    font-family: 'Comic Sans MS', cursive;
+    text-shadow: 2px 2px 4px #ffb6c1;
+    z-index: 999;
+}
