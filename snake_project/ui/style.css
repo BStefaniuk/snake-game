@@ -62,9 +62,21 @@ h1 {
     left: 50%;
     transform: translate(-50%, -50%);
     font-size: 48px;
-    color: #d63384;
-    font-weight: bold;
-    font-family: 'Comic Sans MS', cursive;
-    text-shadow: 2px 2px 4px #ffb6c1;
+    text-align: center;
     z-index: 999;
+}
+
+.pause-icon{
+    font-size: 48px;
+    display: block;
+    margin-bottom: 10px;
+    text-shadow: 1px 1px 3px #888;
+}
+
+.pause-text{
+    font-size: 48px;
+    font-weight: bold;
+    color: #e91e63;
+    font-family: 'Comic Sans MS', cursive;
+    text-shadow: 2px 2px 6px #ffb6c1;
 }
