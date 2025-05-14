@@ -60,7 +60,7 @@ MONGO_URI=mongodb+srv://<username>:<password>@<host>/?retryWrites=true&w=majorit
 6. Pamiętaj, aby dodać swój adres IP w sekcji **Network Access** w MongoDB Atlas. W innym przypadku połączenie nie zadziała!
 ---
 
-## Jak uruchomić projekt w Dockerze?
+## 🐳 Jak uruchomić projekt w Dockerze?
 
 1. Upewnij się, że masz plik ```.env``` z danymi dostępu do MongoDB Atlas
 
