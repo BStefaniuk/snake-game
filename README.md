@@ -1,11 +1,16 @@
 # s27929-s28751-python-game
-Projekt nr 1 - Gra "Snake" wykonana w języku python w ramach przedmiotu PPY z graficznym interfejsem oraz integracją z bazą danych MongoDB Atlas.
+
+**Projekt nr 1 – Candy Snake**  
+Wykonany w języku Python w ramach przedmiotu **PPY**, z graficznym interfejsem frontendowym (HTML + CSS + JS) oraz integracją z bazą danych **MongoDB Atlas**.
+
+Gra działa przez przeglądarkę, komunikuje się z backendem (Flask) i zapisuje dane użytkowników do chmurowej bazy danych.
 
 ---
 ## ⚙️ Wymagania
 
 - Python 3.10+ (testowane na 3.13.3)
 - MongoDB Atlas (darmowe konto)
+- Przeglądarka
 
 Zainstaluj wszystkie zależności:
 ```bash
@@ -19,10 +24,16 @@ pip install -r requirements.txt
 cd s27929-s28751-python-game
 ```
 
-2. Uruchom grę:
+2. Skonfiguruj połączenie z bazą(niżej instrukcja)
+
+3. Uruchom backend API:
 ```bash
-python main.py
+python api.py
 ```
+Serwer wystartuje na: ```http://127.0.0.1:5000```
+
+4. Uruchom grę (frontend)
+Otwórz plik ```ui/index.html``` w przeglądarce
 
 ## 🧪 Jak uruchomić testy?
 
