@@ -1,5 +1,9 @@
 import pytest
-pytestmark = pytest.mark.skip(reason="Pominieto testy zalezne od MongoDB w CI")
+import os
+
+#jesli uruchomione w githubactions to pominiete
+skip_in_ci = os.getenv("CI") == "true"
+pytestmark = pytest.mark.skipif(skip_in_ci, reason="Pominięto testy bazy danych w CI")
 
 from snake_project.database.db import get_db
 from snake_project.database.models import users
