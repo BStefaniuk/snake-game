@@ -10,19 +10,18 @@ games = db["games"] if db is not None else None    ##dane o rozegranych grach
 #Create
 #MongoDB ma swoj wlasny unikalny _id tworzony automatycznie
 def add_user(nick: str, score: int = 0, map_size: str = "10x10"):
-    return users.insert_one({
-        "nick": nick, 
-        "score": score,
-        "map_size": map_size
-    })
+    return users.replace_one(
+        {"nick": nick},
+        {"nick": nick, "score": score, "map_size": map_size},
+        upsert=True
+    )
 
 def add_game(nick: str, date: str, playing_time: float, score: int):
-    return games.insert_one({
-        "nick": nick,
-        "date": date,
-        "playing_time": playing_time,
-        "score": score
-    })
+    return games.replace_one(
+        {"nick": nick, "date": date, "playing_time": playing_time, "score": score},
+        {"nick": nick, "date": date, "playing_time": playing_time, "score": score},
+        upsert=True
+)
 
 #Read
 def get_user(nick: str):
