@@ -3,8 +3,8 @@ import json
 
 db = get_db()
 
-users = db["users"] if db else None     ##gracze
-games = db["games"] if db else None     ##dane o rozegranych grach
+users = db["users"] if db else None    ##gracze
+games = db["games"] if db else None    ##dane o rozegranych grach
 
          #CRUD( Create, Read, Update, Delete)
 #Create
