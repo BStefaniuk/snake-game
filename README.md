@@ -5,7 +5,10 @@ Wykonany w języku Python w ramach przedmiotu **PPY**, z graficznym interfejsem 
 
 Gra działa przez przeglądarkę, komunikuje się z backendem (Flask) i zapisuje dane użytkowników do chmurowej bazy danych.
 
----
+Prezentacja 
+[CandySnake.pdf](https://github.com/user-attachments/files/20573059/CandySnake.pdf)
+[CandySnake.pptx](https://github.com/user-attachments/files/20573064/CandySnake.pptx)
+
 ## ⚙️ Wymagania
 
 - Python 3.10+ (testowane na 3.13.3)
