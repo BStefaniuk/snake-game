@@ -1,7 +1,7 @@
 # Snake game
 
 **Projekt nr 1 – Candy Snake**  
-Wykonany w języku Python w ramach przedmiotu **PPY**, z graficznym interfejsem frontendowym (HTML + CSS + JS) oraz integracją z bazą danych **MongoDB Atlas**.
+Wykonany w języku Python w ramach przedmiotu **PPY (Podstawy Programowania w języku Python)**, z graficznym interfejsem frontendowym (HTML + CSS + JS) oraz integracją z bazą danych **MongoDB Atlas**.
 
 Gra działa przez przeglądarkę, komunikuje się z backendem (Flask) i zapisuje dane użytkowników do chmurowej bazy danych.
 
@@ -24,7 +24,7 @@ pip install -r requirements.txt
 
 1. Przejdź do katalogu z projektem:
 ```bash
-cd s27929-s28751-python-game
+cd snake-game
 ```
 
 2. Skonfiguruj połączenie z bazą(niżej instrukcja)
