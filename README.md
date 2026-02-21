@@ -1,4 +1,4 @@
-# s27929-s28751-python-game
+# Snake game
 
 **Projekt nr 1 – Candy Snake**  
 Wykonany w języku Python w ramach przedmiotu **PPY**, z graficznym interfejsem frontendowym (HTML + CSS + JS) oraz integracją z bazą danych **MongoDB Atlas**.
